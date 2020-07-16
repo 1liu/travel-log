@@ -4,6 +4,7 @@ const morgan = require('morgan');
 // helmet: secure request header
 const helmet = require('helmet');
 const cors = require('cors');
+const mongoose = require('mongoose');
 const middlewares = require('./middlewares');
 
 const app = express();
