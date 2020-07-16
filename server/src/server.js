@@ -17,10 +17,10 @@ mongoose.connect(process.env.DATABASE_URL,
 const app = express();
 app.use(morgan('common'));
 app.use(helmet());
-app.use(express.json());
 app.use(cors({
   origin: process.env.CORS_ORIGIN,
 }));
+app.use(express.json());
 
 app.get('/', (req, res) => {
   res.json({
