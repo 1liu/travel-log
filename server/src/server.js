@@ -6,12 +6,20 @@ const helmet = require('helmet');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const middlewares = require('./middlewares');
+require('dotenv').config();
+const logs = require('./api/logs');
+// getting-started.js
+mongoose.connect(process.env.DATABASE_URL,
+  { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('MongoDB successfully connected'))
+  .catch((err) => console.log(err));
 
 const app = express();
 app.use(morgan('common'));
 app.use(helmet());
+app.use(express.json());
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: process.env.CORS_ORIGIN,
 }));
 
 app.get('/', (req, res) => {
@@ -19,7 +27,8 @@ app.get('/', (req, res) => {
     message: 'Hello, this is root route',
   });
 });
-
+// routes
+app.use('/api/logs', logs);
 // middlewares
 app.use(middlewares.notFound);
 app.use(middlewares.errorHandler);
