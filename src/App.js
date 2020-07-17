@@ -31,6 +31,7 @@ const App = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
     console.log('submitted')
   }
 
@@ -115,15 +116,15 @@ const App = () => {
                 <div className="popup">
                   <h3>Add your new log here</h3>
                   <form onSubmit={handleSubmit} className="entry-form">
-                    <label for="title">Title:</label>
+                    <label htmlFor="title">Title:</label>
                     <input type="text" id="title" name="title" />
-                    <label for="location">Location:</label>
+                    <label htmlFor="location">Location:</label>
                     <input type="location" id="location" name="location" />
-                    <label for="comments">Comments:</label>
+                    <label htmlFor="comments">Comments:</label>
                     <textarea row={3} type="comments" id="comments" name="comments" />
-                    <label for="image">Image:</label>
+                    <label htmlFor="image">Image:</label>
                     <input type="text" id="image" name="image" />
-                    <label for="visitedDate">Visit Date: </label>
+                    <label htmlFor="visitedDate">Visit Date: </label>
                     <input type="date" id="visitedDate" name="visitedDate" />
                     <button onClick={handleSubmit}>Create Log</button>
                   </form>
