@@ -16,6 +16,14 @@ body {
 .popup {
   width: 40vw;
 }
+.popup img{
+  display: block;
+  height: 300px;
+  text-align: center;
+  margin: 0 auto;
+
+
+}
 
 .yellow {
   color: yellow;

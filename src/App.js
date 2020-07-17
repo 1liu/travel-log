@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useState, useEffect, Fragment } from "react";
 import ReactMapGL, { Marker, Popup } from "react-map-gl";
+import LogForm from './LogForm'
 
 const App = () => {
   const [logEntries, setLogEntries] = useState([]);
@@ -29,11 +30,6 @@ const App = () => {
 
   }
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    console.log('submitted')
-  }
 
   useEffect(() => {
     listLogEntries();
@@ -83,58 +79,47 @@ const App = () => {
               <h3>{entry.title}</h3>
               <p>{entry.comments}</p>
               <small>Visited on: {new Date(entry.visitedDate).toLocaleDateString()}</small>
+              {entry.image && <img src={entry.image} alt={entry.title} />}
             </div>
           </Popup>}
-          {addEntryLocation && (
-            <Fragment>
-              <Marker
-                latitude={addEntryLocation.latitude}
-                longitude={addEntryLocation.longitude}
-              >
-                <div>
-                  <svg
-                    className="marker yellow"
-                    viewBox="0 0 24 24"
-                    width={12 * viewport.zoom}
-                    height={12 * viewport.zoom}
-                    stroke="currentColor"
-                    fill="none"
-                  >
-                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-                    <circle cx="12" cy="10" r="3"></circle>
-                  </svg>
-                </div>
-              </Marker>
-              <Popup
-                latitude={addEntryLocation.latitude}
-                longitude={addEntryLocation.longitude}
-                dynamicPosition={true}
-                closeButton={true}
-                closeOnClick={false}
-                onClose={() => setAddEntryLocation(null)}
-                anchor="top" >
-                <div className="popup">
-                  <h3>Add your new log here</h3>
-                  <form onSubmit={handleSubmit} className="entry-form">
-                    <label htmlFor="title">Title:</label>
-                    <input type="text" id="title" name="title" />
-                    <label htmlFor="location">Location:</label>
-                    <input type="location" id="location" name="location" />
-                    <label htmlFor="comments">Comments:</label>
-                    <textarea row={3} type="comments" id="comments" name="comments" />
-                    <label htmlFor="image">Image:</label>
-                    <input type="text" id="image" name="image" />
-                    <label htmlFor="visitedDate">Visit Date: </label>
-                    <input type="date" id="visitedDate" name="visitedDate" />
-                    <button onClick={handleSubmit}>Create Log</button>
-                  </form>
-                </div>
-              </Popup>
-            </Fragment>
-          )}
         </Fragment>
       ))
       }
+      {addEntryLocation && (
+        <Fragment>
+          <Marker
+            latitude={addEntryLocation.latitude}
+            longitude={addEntryLocation.longitude}
+          >
+            <div>
+              <svg
+                className="marker yellow"
+                viewBox="0 0 24 24"
+                width={12 * viewport.zoom}
+                height={12 * viewport.zoom}
+                stroke="currentColor"
+                fill="none"
+              >
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+            </div>
+          </Marker>
+          <Popup
+            latitude={addEntryLocation.latitude}
+            longitude={addEntryLocation.longitude}
+            dynamicPosition={true}
+            closeButton={true}
+            closeOnClick={false}
+            onClose={() => setAddEntryLocation(null)}
+            anchor="top" >
+            <LogForm
+              lngLat={[addEntryLocation.longitude, addEntryLocation.latitude]}
+              onClose={() => { setAddEntryLocation(null); listLogEntries() }}
+            />
+          </Popup>
+        </Fragment>
+      )}
     </ReactMapGL >
 
 
